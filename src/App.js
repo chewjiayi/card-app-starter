@@ -1,12 +1,11 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import CardList from "./pages/CardList";
 import AddCard from "./pages/AddCard";
 import EditCard from "./pages/EditCard";
-import "./App.css";
 
-export default function App() {
+function App() {
   return (
     <BrowserRouter>
       <Navbar />
@@ -14,10 +13,10 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/cards" element={<CardList />} />
         <Route path="/cards/new" element={<AddCard />} />
-        <Route path="/cards/:cardId/edit" element={<EditCard />} />
-      
-        {/* TODO: Complete the routes */}
+        <Route path="/cards/:id/edit" element={<EditCard />} />
       </Routes>
     </BrowserRouter>
   );
 }
+
+export default App;
