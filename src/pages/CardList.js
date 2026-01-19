@@ -8,24 +8,57 @@ export default function CardList() {
     - delete button calling handleDelete with the card object
     - handle loading, busy, and error states
     - style as a grid UI */
-    const [cards, setCards] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState('');
-    async function load(){
-      setLoading(true);
-      try {
-        const data = await getCards();
-        setCards(data);
-      } catch (err) {
-        console.error("Failed to load Cards:", err);
-        setError('Failed to load cards. Please try again later.');
-      }finally {
-        setLoading(false);
-      }
+
+  const [cards, setCards] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  async function load() {
+    setLoading(true);
+    try {
+      const data = await getCards();
+      setCards(data);
+    } catch (error) {
+      console.error("Failed to load cards", error);
+      setError("Failed to load cards");
+    } finally {
+      setLoading(false);
     }
-    useEffect(() => {
+  }
 
-    },[])
+  useEffect(() => {
+    load();
+  }, []);
 
-  return <main></main>;
+  async function handleDelete(card) {
+    try {
+      // delete from backend
+      const res = await deleteCard(card.id);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+      // remove from local state
+      setCards((prevCards) => prevCards.filter((c) => c.id !== card.id));
+    } catch (error) {
+      console.error("Failed to delete card", error);
+      setError("Failed to delete card");
+    }
+  }
+
+  return (
+    <main>
+      <div>
+        {cards.map((card) => (
+          <Card
+            key={card.id}
+            card={card}
+            onDelete={async () => {
+              await deleteCard(card.id);
+              await load();
+            }}
+            busy={loading}
+          />
+        ))}
+      </div>
+    </main>
+  );
 }

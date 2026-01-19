@@ -13,8 +13,8 @@ export default function Card({ card, onDelete, busy }) {
     <h2>{card.name}</h2>
     <p>ID: {card.id}</p>
     <Link to={`/cards/${card.id}/edit`}>Edit</Link>
-    <button onClick={() => onDelete(card)} disabled={busy}>
-      {busy ? 'Deleting...' : 'Delete'}
+    <button onClick={() => onDelete(card)} >
+      Delete
     </button>
   </div>;
 }
