@@ -11,6 +11,7 @@ export default function CardList() {
 
   const [cards, setCards] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
 
   async function load() {
@@ -31,6 +32,8 @@ export default function CardList() {
   }, []);
 
   async function handleDelete(card) {
+
+    setBusy(true);
     try {
       // delete from backend
       const res = await deleteCard(card.id);
@@ -51,10 +54,7 @@ export default function CardList() {
           <Card
             key={card.id}
             card={card}
-            onDelete={async () => {
-              await deleteCard(card.id);
-              await load();
-            }}
+            onDelete={handleDelete}
             busy={loading}
           />
         ))}
