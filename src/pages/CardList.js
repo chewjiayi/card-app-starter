@@ -9,8 +9,19 @@ export default function CardList() {
     - handle loading, busy, and error states
     - style as a grid UI */
     const [cards, setCards] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
     async function load(){
-     
+      setLoading(true);
+      try {
+        const data = await getCards();
+        setCards(data);
+      } catch (err) {
+        console.error("Failed to load Cards:", err);
+        setError('Failed to load cards. Please try again later.');
+      }finally {
+        setLoading(false);
+      }
     }
     useEffect(() => {
 
