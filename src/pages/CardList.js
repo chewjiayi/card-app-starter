@@ -8,13 +8,9 @@ export default function CardList() {
     - delete button calling handleDelete with the card object
     - handle loading, busy, and error states
     - style as a grid UI */
-    const [cards, setCards] = useState([]);
-    async function load(){
-     
-    }
-    useEffect(() => {
-
-    },[])
+  const [cards, setCards] = useState([]);
+  async function load() {}
+  useEffect(() => {}, []);
 
   return <main></main>;
 }
