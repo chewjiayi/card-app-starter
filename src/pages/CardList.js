@@ -3,12 +3,6 @@ import Card from "../components/Card";
 import { getCards, deleteCard } from "../services/api";
 
 export default function CardList() {
-  /* TODO: Complete the CardList page
-    - display a list of cards (use the Card component to display each card)
-    - delete button calling handleDelete with the card object
-    - handle loading, busy, and error states
-    - style as a grid UI */
-
   const [cards, setCards] = useState([]);
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState(false);
@@ -16,11 +10,11 @@ export default function CardList() {
 
   async function load() {
     setLoading(true);
+    setError("");
     try {
       const data = await getCards();
       setCards(data);
-    } catch (error) {
-      console.error("Failed to load cards", error);
+    } catch (err) {
       setError("Failed to load cards");
     } finally {
       setLoading(false);
@@ -32,30 +26,31 @@ export default function CardList() {
   }, []);
 
   async function handleDelete(card) {
+    if (!window.confirm("Delete this card?")) return;
 
     setBusy(true);
     try {
-      // delete from backend
-      const res = await deleteCard(card.id);
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-
-      // remove from local state
-      setCards((prevCards) => prevCards.filter((c) => c.id !== card.id));
-    } catch (error) {
-      console.error("Failed to delete card", error);
+      await deleteCard(card.id);
+      setCards((prev) => prev.filter((c) => c.id !== card.id));
+    } catch (err) {
       setError("Failed to delete card");
+    } finally {
+      setBusy(false);
     }
   }
 
+  if (loading) return <main>Loading cards...</main>;
+  if (error) return <main className="error">{error}</main>;
+
   return (
     <main>
-      <div>
+      <div className="card-grid">
         {cards.map((card) => (
           <Card
             key={card.id}
             card={card}
             onDelete={handleDelete}
-            busy={loading}
+            busy={busy}
           />
         ))}
       </div>
