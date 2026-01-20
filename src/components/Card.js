@@ -12,3 +12,29 @@ export default function Card({ card, onDelete, onEdit }) {
     </div>
   );
 }
+
+
+const styles = {
+  card: {
+    width: 260,
+    border: "1px solid #e5e5e5",
+    borderRadius: 10,
+    padding: 12,
+    backgroundColor: "#fff",
+    boxShadow: "0 2px 6px rgba(0,0,0,0.05)",
+    display: "flex",
+    flexDirection: "column",
+    gap: 10,
+  },
+  image: {
+    width: "100%",
+    height: 160,
+    objectFit: "cover",
+    borderRadius: 6,
+  },
+  actions: {
+    display: "flex",
+    gap: 8,
+    marginTop: 6,
+  },
+};
