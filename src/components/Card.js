@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 export default function Card({ card, onDelete, busy }) {
   return (
     <div className="card">
-      <img src={card.card_pic} alt={card.card_name} />
+      <img src={card.card_URL} alt={card.card_name} />
       <h2>{card.card_name}</h2>
       <p>ID: {card.id}</p>
 
