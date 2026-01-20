@@ -42,7 +42,7 @@ export async function addCard(card) {
 }
 
 export async function updateCard(id, card) {
-  const res = await fetch(`${API_URL}/updatecard/${id}`, {
+  const response = await fetch({ API_URL } + /editcard/ + id, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -50,17 +50,21 @@ export async function updateCard(id, card) {
     body: JSON.stringify(card),
   });
 
-  if (!res.ok) {
+  if (!response.ok) {
     throw new Error("Failed to update card");
   }
 
-  return res.json();
+  return response.json();
 }
 
-export function deleteCard(id) {
-  ;
-  // TODO: implement DELETE /deletecard/:id
-  return fetch(`${API_URL}/deletecard/${id}`, {
+export async function deleteCard(id) {
+  const response = await fetch(`${API_URL}/deletecard/${id}`, {
     method: "DELETE",
   });
+
+  if (!response.ok) {
+    throw new Error("Failed to delete card");
+  }
+
+  return response.json();
 }
