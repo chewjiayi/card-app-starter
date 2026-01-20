@@ -1,34 +1,14 @@
 export default function Card({ card, onDelete, onEdit }) {
   return (
-    <div className="card">
-      <img src={card.card_pic} alt={card.card_name} />
-      <h2>{card.card_name}</h2>
-      <p>ID: {card.id}</p>
+    <div style={styles.card}>
+      <img src={card.card_URL} alt={card.card_name} style={styles.image} />
 
-      <Link to={`/cards/${card.id}/edit`}>Edit</Link>
+      <h3>{card.card_name}</h3>
 
-      <button onClick={() => onDelete(card)} disabled={busy}>
-        {busy ? "Deleting..." : "Delete"}
-      </button>
+      <div style={styles.actions}>
+        <button onClick={() => onEdit(card.card_ID)}>Edit</button>
+        <button onClick={() => onDelete(card.card_ID)}>Delete</button>
+      </div>
     </div>
   );
 }
-
-const styles = {
-  card: {
-    border: "1px solid #eee",
-    padding: "16px",
-    borderRadius: "10px",
-    width: "220px",
-    textAlign: "center",
-  },
-  image: {
-    width: "100%",
-    borderRadius: "6px",
-  },
-  actions: {
-    display: "flex",
-    justifyContent: "space-between",
-    marginTop: "10px",
-  },
-};
