@@ -10,7 +10,7 @@ export default function Navbar() {
           Home
         </NavLink>
 
-        <NavLink to="/cards" style={navStyle}>
+        <NavLink to="/cards" end style={navStyle}>
           Cards
         </NavLink>
 
