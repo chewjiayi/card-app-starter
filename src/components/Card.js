@@ -1,8 +1,7 @@
-export default function Card({ card, onDelete, onEdit }) {
+export default function Card({ card, onEdit, onDelete }) {
   return (
     <div style={styles.card}>
-      <img src={card.card_URL} alt={card.card_name} style={styles.image} />
-
+      <img src={card.card_URL} alt={card.card_name} style={styles.img} />
       <h3>{card.card_name}</h3>
 
       <div style={styles.actions}>
@@ -12,3 +11,19 @@ export default function Card({ card, onDelete, onEdit }) {
     </div>
   );
 }
+
+const styles = {
+  card: {
+    border: "1px solid #ddd",
+    padding: "16px",
+    borderRadius: "8px",
+    width: "220px",
+  },
+  img: {
+    width: "100%",
+  },
+  actions: {
+    display: "flex",
+    justifyContent: "space-between",
+  },
+};

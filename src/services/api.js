@@ -1,70 +1,59 @@
-/**
- * API Service (Create React App)
- *
- * 1) Create `.env` at project root
- * 2) Set: REACT_APP_API_URL=https://YOUR-BACKEND.onrender.com
- * 3) Restart `npm start`
- */
-
-const API_URL = process.env.REACT_APP_API_URL || "";
-
-/**
- * TODO: If your backend routes differ, update the paths here.
- * Required endpoints:
- * - GET    /allcards
- * - POST   /addcard
- * - PUT    /updatecard/:id
- * - DELETE /deletecard/:id
- */
+const API_URL = process.env.REACT_APP_API_URL;
 
 export async function getCards() {
-  // GET /allcards (provided as reference)
   const res = await fetch(`${API_URL}/allcards`);
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  if (!res.ok) {
+    throw new Error(`Failed to load cards (${res.status})`);
+  }
   return res.json();
 }
 
 export async function addCard(card) {
-  const response = await fetch(`${API_URL}/addcard`, {
+  const res = await fetch(`${API_URL}/addcard`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(card),
-    // since I am using this deconstruct in the { card_name, card_img } = req.body , please ake sure to format the card like this {card_name: "example" , card_img: "example"};
+    body: JSON.stringify({
+      card_name: card.card_name,
+      card_img: card.card_URL,
+    }),
   });
 
-  if (!response.ok) {
+  if (!res.ok) {
     throw new Error("Failed to add card");
   }
 
-  return response.json();
+  return res.json();
 }
 
 export async function updateCard(id, card) {
-  const response = await fetch({ API_URL } + /editcard/ + id, {
+  const res = await fetch(`${API_URL}/updatecard/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(card),
+    body: JSON.stringify({
+      card_name: card.card_name,
+      card_img: card.card_URL,
+    }),
   });
 
-  if (!response.ok) {
+  if (!res.ok) {
     throw new Error("Failed to update card");
   }
 
-  return response.json();
+  return res.json();
 }
 
 export async function deleteCard(id) {
-  const response = await fetch(`${API_URL}/deletecard/${id}`, {
+  const res = await fetch(`${API_URL}/deletecard/${id}`, {
     method: "DELETE",
   });
 
-  if (!response.ok) {
+  if (!res.ok) {
     throw new Error("Failed to delete card");
   }
 
-  return response.json();
+  return res.json();
 }

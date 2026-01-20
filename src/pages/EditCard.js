@@ -25,16 +25,23 @@ export default function EditCard() {
   }, [id]);
 
   async function handleSubmit(updatedCard) {
-    try {
-      setBusy(true);
-      await updateCard(id, updatedCard);
-      navigate("/cards");
-    } catch {
-      setError("Failed to update card");
-    } finally {
-      setBusy(false);
-    }
+  try {
+    setBusy(true);
+    setError("");
+
+    await updateCard(id, {
+      card_name: updatedCard.card_name,
+      card_URL: updatedCard.card_URL,
+    });
+
+    navigate("/cards");
+  } catch {
+    setError("Failed to update card");
+  } finally {
+    setBusy(false);
   }
+}
+
 
   if (!card) return <p>Loading...</p>;
 
