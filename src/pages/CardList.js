@@ -5,7 +5,6 @@ import { getCards, deleteCard } from "../services/api";
 
 export default function CardList() {
   const [cards, setCards] = useState([]);
-  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -13,12 +12,8 @@ export default function CardList() {
   }, []);
 
   async function loadCards() {
-    try {
-      const data = await getCards();
-      setCards(data);
-    } catch {
-      setError("Failed to load cards");
-    }
+    const data = await getCards();
+    setCards(data);
   }
 
   async function handleDelete(id) {
@@ -31,20 +26,53 @@ export default function CardList() {
   }
 
   return (
-    <main>
-      <h2>All Cards</h2>
-      {error && <p style={{ color: "red" }}>{error}</p>}
+    <main style={styles.page}>
+      {/* Hero Section */}
+      <section style={styles.hero}>
+        <h1 style={styles.heroTitle}>Discover Your Cards</h1>
+        <p style={styles.heroText}>
+          A curated collection of beautifully crafted cards.
+        </p>
+      </section>
 
-      <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
-        {cards.map((card) => (
+      {/* Cards Section */}
+      <section style={styles.cardsSection}>
+        {cards.map((card, index) => (
           <Card
             key={card.card_ID}
             card={card}
+            index={index}
             onEdit={handleEdit}
             onDelete={handleDelete}
           />
         ))}
-      </div>
+      </section>
     </main>
   );
 }
+const styles = {
+  page: {
+    minHeight: "100vh",
+    background:
+      "linear-gradient(135deg, #f6f3ff, #eef7ff)",
+    padding: "40px",
+  },
+  hero: {
+    maxWidth: "700px",
+    marginBottom: "48px",
+  },
+  heroTitle: {
+    fontSize: "36px",
+    fontWeight: "700",
+    marginBottom: "12px",
+  },
+  heroText: {
+    fontSize: "16px",
+    color: "#666",
+  },
+  cardsSection: {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
+    gap: "28px",
+  },
+};
