@@ -5,6 +5,7 @@
  * 2) Set: REACT_APP_API_URL=https://YOUR-BACKEND.onrender.com
  * 3) Restart `npm start`
  */
+
 const API_URL = process.env.REACT_APP_API_URL || "";
 
 /**
@@ -23,8 +24,21 @@ export async function getCards() {
   return res.json();
 }
 
-export function addCard(card) {
-  // TODO: implement POST /addcard
+export async function addCard(card) {
+  const response = await fetch(`${API_URL}/addcard`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(card),
+    // since I am using this deconstruct in the { card_name, card_img } = req.body , please ake sure to format the card like this {card_name: "example" , card_img: "example"};
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to add card");
+  }
+
+  return response.json();
 }
 
 export function updateCard(id, card) {
