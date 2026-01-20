@@ -25,23 +25,22 @@ export default function EditCard() {
   }, [id]);
 
   async function handleSubmit(updatedCard) {
-  try {
-    setBusy(true);
-    setError("");
+    try {
+      setBusy(true);
+      setError("");
 
-    await updateCard(id, {
-      card_name: updatedCard.card_name,
-      card_URL: updatedCard.card_URL,
-    });
+      await updateCard(id, {
+        card_name: updatedCard.card_name,
+        card_img: updatedCard.card_URL,
+      });
 
-    navigate("/cards");
-  } catch {
-    setError("Failed to update card");
-  } finally {
-    setBusy(false);
+      navigate("/cards");
+    } catch {
+      setError("Failed to update card");
+    } finally {
+      setBusy(false);
+    }
   }
-}
-
 
   if (!card) return <p>Loading...</p>;
 
@@ -49,11 +48,7 @@ export default function EditCard() {
     <main style={styles.container}>
       <h2>Edit Card</h2>
       {error && <p style={styles.error}>{error}</p>}
-      <CardForm
-        initialData={card}
-        onSubmit={handleSubmit}
-        disabled={busy}
-      />
+      <CardForm initialData={card} onSubmit={handleSubmit} disabled={busy} />
     </main>
   );
 }

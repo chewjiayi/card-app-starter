@@ -29,18 +29,18 @@ export async function addCard(card) {
 
 export async function updateCard(id, card) {
   const res = await fetch(`${API_URL}/editcard/${id}`, {
-    method: "PUT",
+    method: "PATCH",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
       card_name: card.card_name,
-      card_img: card.card_URL,
+      card_img: card.card_img,
     }),
   });
 
   if (!res.ok) {
-    throw new Error("Failed to update card");
+    throw new Error("Failed to update car wqtffffffffd");
   }
 
   return res.json();
