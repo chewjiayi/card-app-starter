@@ -30,6 +30,7 @@ export default function CardForm({ initialData, onSubmit, disabled }) {
         required
         disabled={disabled}
         style={styles.input}
+        placeholder="Enter card name"
       />
 
       <label style={styles.label}>Card Image URL</label>
@@ -40,6 +41,7 @@ export default function CardForm({ initialData, onSubmit, disabled }) {
         required
         disabled={disabled}
         style={styles.input}
+        placeholder="https://example.com/image.jpg"
       />
 
       <button disabled={disabled} style={styles.button}>
@@ -53,23 +55,35 @@ const styles = {
   form: {
     display: "flex",
     flexDirection: "column",
-    gap: "12px",
+    gap: "20px",
   },
+
   label: {
+    fontSize: "14px",
     fontWeight: "600",
+    color: "#444",
   },
+
   input: {
-    padding: "8px",
-    borderRadius: "6px",
-    border: "1px solid #ccc",
+    padding: "14px 18px",
+    borderRadius: "14px",
+    border: "1px solid #ddd",
+    fontSize: "15px",
+    backgroundColor: "#fff",
+    outline: "none",
+    transition: "border-color 0.2s ease, box-shadow 0.2s ease",
   },
+
   button: {
-    marginTop: "10px",
-    padding: "10px",
-    borderRadius: "6px",
+    marginTop: "16px",
+    padding: "14px",
+    borderRadius: "18px",
     border: "none",
-    backgroundColor: "#222",
-    color: "#fff",
+    fontSize: "16px",
+    fontWeight: "600",
     cursor: "pointer",
+    background: "linear-gradient(135deg, #a18cd1, #fbc2eb)",
+    color: "#fff",
+    boxShadow: "0 10px 25px rgba(161,140,209,0.35)",
   },
 };
