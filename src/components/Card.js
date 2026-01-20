@@ -1,7 +1,7 @@
 export default function Card({ card, onEdit, onDelete }) {
   return (
     <div style={styles.card}>
-      <img src={card.card_URL} alt={card.card_name} style={styles.img} />
+      <img src={card.card_URL} alt={card.card_name} style={styles.image} />
       <h3>{card.card_name}</h3>
 
       <div style={styles.actions}>
@@ -14,16 +14,25 @@ export default function Card({ card, onEdit, onDelete }) {
 
 const styles = {
   card: {
-    border: "1px solid #ddd",
-    padding: "16px",
-    borderRadius: "8px",
-    width: "220px",
+    width: 260,
+    border: "1px solid #e5e5e5",
+    borderRadius: 10,
+    padding: 12,
+    backgroundColor: "#fff",
+    boxShadow: "0 2px 6px rgba(0,0,0,0.05)",
+    display: "flex",
+    flexDirection: "column",
+    gap: 10,
   },
-  img: {
+  image: {
     width: "100%",
+    height: 160,
+    objectFit: "cover",
+    borderRadius: 6,
   },
   actions: {
     display: "flex",
-    justifyContent: "space-between",
+    gap: 8,
+    marginTop: 6,
   },
 };
