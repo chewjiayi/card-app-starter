@@ -41,14 +41,24 @@ export async function addCard(card) {
   return response.json();
 }
 
-export function updateCard(id, card) {
-  // TODO: implement PUT /updatecard/:id
+export async function updateCard(id, card) {
+  const response = await fetch({ API_URL } + /editcard/ + id, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(card),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to update card");
+  }
+
+  return response.json();
 }
 
-export function deleteCard(id) {
-  s;
-  // TODO: implement DELETE /deletecard/:id
-  return fetch(`${API_URL}/deletecard/${id}`, {
+export async function deleteCard(id) {
+  const response = await fetch(`${API_URL}/deletecard/${id}`, {
     method: "DELETE",
   });
 
