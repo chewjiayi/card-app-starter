@@ -8,64 +8,58 @@ export default function EditCard() {
   const navigate = useNavigate();
 
   const [card, setCard] = useState(null);
-  const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
 
-
   useEffect(() => {
-    async function loadCard() {
+    async function load() {
       try {
         const cards = await getCards();
-        const foundCard = cards.find((c) => c.id === Number(id));
-
-        if (!foundCard) {
-          setError("Card not found");
-        } else {
-          setCard(foundCard);
-        }
-      } catch (err) {
+        const found = cards.find((c) => c.card_ID === Number(id));
+        setCard(found);
+      } catch {
         setError("Failed to load card");
-      } finally {
-        setLoading(false);
       }
     }
-
-    loadCard();
+    load();
   }, [id]);
 
-  // Handle form submit
   async function handleSubmit(updatedCard) {
-  try {
-    setBusy(true);
-    setError("");
-    await updateCard(id, updatedCard);
-    navigate("/cards");
-  } catch (err) {
-    setError("Failed to update card");
-  } finally {
-    setBusy(false);
-  }
-}
-
-
-  if (loading) {
-    return <main>Loading...</main>;
+    try {
+      setBusy(true);
+      await updateCard(id, updatedCard);
+      navigate("/cards");
+    } catch {
+      setError("Failed to update card");
+    } finally {
+      setBusy(false);
+    }
   }
 
-  if (error) {
-    return <main className="error">{error}</main>;
-  }
+  if (!card) return <p>Loading...</p>;
 
   return (
-    <main className="form-page">
-      <h1>Edit Card</h1>
-
+    <main style={styles.container}>
+      <h2>Edit Card</h2>
+      {error && <p style={styles.error}>{error}</p>}
       <CardForm
         initialData={card}
         onSubmit={handleSubmit}
-        busy={busy}
+        disabled={busy}
       />
     </main>
   );
 }
+
+const styles = {
+  container: {
+    maxWidth: "500px",
+    margin: "40px auto",
+    padding: "24px",
+    border: "1px solid #eee",
+    borderRadius: "10px",
+  },
+  error: {
+    color: "red",
+  },
+};

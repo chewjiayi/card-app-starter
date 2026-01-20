@@ -1,9 +1,7 @@
-import { Link } from "react-router-dom";
-
-export default function Card({ card, onDelete, busy }) {
+export default function Card({ card, onDelete, onEdit }) {
   return (
     <div className="card">
-      <img src={card.card_URL} alt={card.card_name} />
+      <img src={card.card_pic} alt={card.card_name} />
       <h2>{card.card_name}</h2>
       <p>ID: {card.id}</p>
 
@@ -15,3 +13,22 @@ export default function Card({ card, onDelete, busy }) {
     </div>
   );
 }
+
+const styles = {
+  card: {
+    border: "1px solid #eee",
+    padding: "16px",
+    borderRadius: "10px",
+    width: "220px",
+    textAlign: "center",
+  },
+  image: {
+    width: "100%",
+    borderRadius: "6px",
+  },
+  actions: {
+    display: "flex",
+    justifyContent: "space-between",
+    marginTop: "10px",
+  },
+};
