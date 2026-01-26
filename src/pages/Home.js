@@ -1,14 +1,24 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getCards } from "../services/api";
 import "../index.css";
 
 export default function Home() {
+  const navigate = useNavigate();
   const [count, setCount] = useState(0);
 
   useEffect(() => {
     getCards().then(arr => setCount(arr.length));
   }, []);
+
+  function handleCreateClick() {
+    const token = localStorage.getItem("token");
+    if (token) {
+      navigate("/cards/new");
+    } else {
+      navigate("/login");
+    }
+  }
 
   return (
     <main style={styles.main}>
@@ -16,9 +26,7 @@ export default function Home() {
         <div style={styles.container}>
           <h1 style={styles.title}>Your cards, everywhere you go.</h1>
           <p style={styles.subtitle}>Create, organise and share digital cards in seconds.</p>
-          <Link to="/cards/new">
-            <button style={styles.btn}>Create your first card</button>
-          </Link>
+          <button onClick={handleCreateClick} style={styles.btn}>Create your first card</button>
         </div>
       </section>
 
