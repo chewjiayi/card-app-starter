@@ -1,4 +1,4 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import CardForm from "../components/CardForm";
 import { addCard } from "../services/api";
@@ -7,24 +7,17 @@ export default function AddCard() {
   const navigate = useNavigate();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
-  const [values, setValues] = useState({
-    card_name: "",
-    card_URL: "",
-  });
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) navigate("/login");
   }, [navigate]);
 
-  async function handleSubmit(e) {
-    e.preventDefault();
+  async function handleSubmit(cardData) {
     setError("");
     setBusy(true);
-
     try {
-      const res = await addCard(values);
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      await addCard(cardData);
       navigate("/cards");
     } catch (err) {
       console.error(err);
@@ -44,7 +37,7 @@ export default function AddCard() {
 
         {error && <p style={styles.error}>{error}</p>}
 
-        <CardForm onSubmit={handleSubmit} onChange={setValues} values={values} busy={busy} error={error} submitText="Add card" />
+        <CardForm onSubmit={handleSubmit} busy={busy} error={error} submitText="Add card" />
       </section>
     </main>
   );

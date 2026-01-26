@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-export default function CardForm({ initialData, onSubmit, disabled }) {
+export default function CardForm({ initialData, onSubmit, busy, submitText = "Save Card" }) {
   const [cardName, setCardName] = useState("");
   const [cardURL, setCardURL] = useState("");
 
@@ -28,7 +28,7 @@ export default function CardForm({ initialData, onSubmit, disabled }) {
         value={cardName}
         onChange={(e) => setCardName(e.target.value)}
         required
-        disabled={disabled}
+        disabled={busy}
         style={styles.input}
         placeholder="Enter card name"
       />
@@ -39,13 +39,13 @@ export default function CardForm({ initialData, onSubmit, disabled }) {
         value={cardURL}
         onChange={(e) => setCardURL(e.target.value)}
         required
-        disabled={disabled}
+        disabled={busy}
         style={styles.input}
         placeholder="https://example.com/image.jpg"
       />
 
-      <button disabled={disabled} style={styles.button}>
-        {disabled ? "Saving..." : "Save Card"}
+      <button disabled={busy} style={styles.button}>
+        {busy ? "Saving..." : submitText}
       </button>
     </form>
   );
