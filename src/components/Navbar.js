@@ -1,6 +1,13 @@
-import { NavLink } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 
 export default function Navbar() {
+  const token = localStorage.getItem("token");
+  const navigate = useNavigate();
+  function handleLogout() {
+    localStorage.removeItem("token");
+    navigate("/");
+  }
+
   return (
     <header style={styles.header}>
       <strong style={styles.logo}>Cards</strong>
@@ -17,6 +24,10 @@ export default function Navbar() {
         <NavLink to="/cards/new" style={navStylePrimary}>
           + Add Card
         </NavLink>
+        
+        {token ? (<button onClick={handleLogout}>Logout</button>) : <NavLink to="/login">Login</NavLink>}
+
+        
       </nav>
     </header>
   );

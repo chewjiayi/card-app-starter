@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import CardList from "./pages/CardList";
 import AddCard from "./pages/AddCard";
 import EditCard from "./pages/EditCard";
+import Login from "./pages/Login";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/cards" element={<CardList />} />
         <Route path="/cards/new" element={<AddCard />} />
         <Route path="/cards/:id/edit" element={<EditCard />} />

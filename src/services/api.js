@@ -1,4 +1,22 @@
-const API_URL = process.env.REACT_APP_API_URL;
+const API_URL = process.env.REACT_APP_API_URL||"";
+console.log("API_URL:", API_URL);
+
+function authHeader(){
+  const token = localStorage.getItem("token");
+  return token ? { Authorization: `Bearer ${token}` } : {};
+}
+
+
+export async function login(credentials) {
+  console.log("Sending credentials:", credentials);
+  return fetch(`${API_URL}/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(credentials),
+  });
+}
 
 export async function getCards() {
   const res = await fetch(`${API_URL}/allcards`);
@@ -13,6 +31,7 @@ export async function addCard(card) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      ...authHeader(),
     },
     body: JSON.stringify({
       card_name: card.card_name,
